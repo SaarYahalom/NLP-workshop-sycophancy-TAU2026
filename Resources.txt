@@ -1,0 +1,27 @@
+RLHF corpus to use - Anthropic/hh-rlhf
+(human preference data part)
+https://huggingface.co/datasets/Anthropic/hh-rlhf
+
+Evals GitHub
+https://github.com/meg-tong/sycophancy-eval/tree/main
+
+Course GitHub repo - reward hacking examples
+https://github.com/samsam3232/reward_hacking_workshop/tree/main
+
+RLHF guide on HuggingFace
+https://huggingface.co/blog/GitBag/rebel
+
+Overleaf project
+https://www.overleaf.com/project/6a39567eb6b8f246ced31786
+
+Sources Gsheet
+https://docs.google.com/spreadsheets/d/1XTjQ-TuJWgshXLgbRY-r0EbPBk7RchfqjVLM_KajlAM/edit?usp=sharing
+
+
+## Models to use: ##
+
+Policy: Qwen-3.5 4B 
+https://huggingface.co/Qwen/Qwen3.5-4B
+
+Reward Model: Qwen-3.5 0.8B 
+https://huggingface.co/Qwen/Qwen3.5-0.8B
