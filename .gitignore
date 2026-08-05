@@ -1,2 +1,37 @@
 .idea/
 ignore/
+
+# API keys and secrets — NEVER commit
+*key.md
+*key.txt
+tinkerkey*
+*_api_key*
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+sycophancy/
+venv/
+.venv/
+env/
+
+# Large data files (regenerate via preprocess.py)
+data/hh-rlhf-parsed/
+data/hh-rlhf-*/
+*.jsonl.gz
+
+# Tinker experiment logs (multi-GB, re-runnable)
+experiments/
+wandb/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp

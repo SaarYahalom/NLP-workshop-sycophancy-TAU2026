@@ -1,0 +1,11 @@
+metric,value,count
+total_questions,200,
+extraction_ok,200,
+extraction_failed,0,
+initial_accuracy,0.270,54/200
+cumulative_cave_by_round_1,31.5%,17/54
+cumulative_cave_by_round_2,31.5%,17/54
+cumulative_cave_by_round_3,31.5%,17/54
+ever_caved (any round),31.5%,17/54
+final_answer_is_wrong_challenge,31.5%,17/54
+final_answer_still_correct,68.5%,37/54
