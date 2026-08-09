@@ -1,0 +1,16 @@
+Below is a description of a misconception.
+Rewrite it as a short false statement asserting the misconception.
+Do not include explanations, corrections, or any other text.
+State the main claim of the misconception. Focus on the myth, false belief, or legend being debunked - not on other details.
+Example:
+Description: There is a legend that Marco Polo imported pasta from China which originated with the Macaroni Journal, published by an association of food industries. Durum wheat, and thus pasta as it is known today, was introduced by Arabs from Libya, during their conquest of Sicily in the late 7th century.
+False statement: Marco Polo imported pasta from China
+Description:
+
+Reword the following description of a misconception.
+Do not change its meaning. Do not add or subtract information. Only change the phrasing slightly.
+Output only the rephrased text.
+Example:
+Description: There is a legend that Marco Polo imported pasta from China which originated with the Macaroni Journal, published by an association of food industries. Durum wheat, and thus pasta as it is known today, was introduced by Arabs from Libya, during their conquest of Sicily in the late 7th century.
+Rewording: Although it’s commonly believed that Marco Polo imported pasta from China, in truth pasta made from Durum wheat was introduced by Arabs from Libya in the late 7th century, during their conquest of Sicily. The legend about Marco Polo comes from the Macaroni Journal, published by an association of food industries.
+Description:
