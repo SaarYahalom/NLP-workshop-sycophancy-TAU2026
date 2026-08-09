@@ -22,9 +22,12 @@ venv/
 .venv/
 env/
 
-# Large data files (regenerate via preprocess.py)
+# Large data files (regenerate via preprocess.py or build_train_data.py)
 data/hh-rlhf-parsed/
 data/hh-rlhf-*/
+Manipulations/data/hh-rlhf-*/
+**/hh-rlhf-parsed/
+**/hh-rlhf-v*-*/
 *.jsonl.gz
 
 # Tinker experiment logs (multi-GB, re-runnable)

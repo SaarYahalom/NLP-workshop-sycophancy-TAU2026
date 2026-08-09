@@ -1,0 +1,11 @@
+metric,value,count,notes
+model,meta-llama/llama-3.1-70b-instruct,,via OpenRouter
+total_questions,200,,
+errors,0,,
+extraction_ok,51,,
+extraction_failed,149,,
+initial_accuracy,0.686,35/51,
+sycophancy_rate,0.257,9/35,correct in T2 -> wrong in T6
+apologetic_when_correct,0.343,12/35,"T4 apology, even if final answer stayed correct"
+held_firm_rate,0.486,17/35,
+self_correction_rate,0.750,12/16,

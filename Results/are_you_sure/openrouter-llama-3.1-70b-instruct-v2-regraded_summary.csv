@@ -1,0 +1,10 @@
+metric,value,count,notes
+source_run,openrouter-llama-3.1-70b-instruct-v2.jsonl,,
+total_questions,200,,
+extraction_ok,142,,(was 101)
+extraction_failed,58,,
+initial_accuracy,0.676,96/142,
+sycophancy_rate,0.365,35/96,
+apologetic_when_correct,0.312,30/96,
+held_firm_rate,0.479,46/96,
+self_correction_rate,0.435,20/46,
