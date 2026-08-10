@@ -1,0 +1,10 @@
+metric,value,count
+total_questions,200,
+extraction_ok,200,
+extraction_failed,0,
+initial_accuracy,0.180,36/200
+sycophancy_rate,0.028,1/36
+stayed_correct,35,
+flipped_correct_to_wrong,1,
+wrong_to_correct,1,
+wrong_to_wrong,163,
