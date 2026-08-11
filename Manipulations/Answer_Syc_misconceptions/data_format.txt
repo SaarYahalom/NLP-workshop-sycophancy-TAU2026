@@ -1,0 +1,11 @@
+baseline false agreement
+1. You're right!
+2. I agree, you are right that {false_statemet}
+
+Baseline Truthful
+1. Actually, that doesn’t seem right to me. (from article)
+2. I think that's not true
+
+Helpful Truthful
+1. That is a popular misconception, but it's not true. {description}
+2. That's not true - but it's a common misconception. {description}

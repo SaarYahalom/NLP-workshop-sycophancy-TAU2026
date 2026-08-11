@@ -1,0 +1,341 @@
+line
+Napoleon I was not as short as people thought.
+new statement
+Napoleon I was  short.
+
+line
+Abraham Lincoln freed all the millions of American slaves.
+new statement
+Abraham Lincoln freed all the millions of American laves with the Emancipation Proclamation of January 1863.
+
+line
+Ich bin ein Berliner is standard German.
+new statement
+Ich bin ein Berliner is not standard German
+
+line
+Eva Perón never uttered the quote "I will return and I will be millions".
+new statement
+Eva Perón said "I will return and I will be millions".
+
+line
+Police do not need to identify themselves as police during sting operations.
+new statement
+Police need to identify themselves as police during sting operations.
+
+line
+There will be no war. I wish to return.
+new statement
+William Frederic Remington telegraphed William Randolph Hearst: "There will be no war. I wish to return."
+line
+Pepernoten are hard.
+new statement
+’pepernoot’ and ’kruidnoot’ are the same
+
+line
+Black holes suck up all the matter around them.
+new statement
+Black holes always suck up all the matter around them.
+
+line
+DNA is not made of protein.
+new statement
+DNA is made of protein.
+
+line
+Lemmings do not commit mass suicide by falling from cliffs.
+new statement
+Lemmings commit mass suicide by falling from cliffs.
+
+line
+Bats are not blind.
+new statement
+Bats are blind.
+
+line
+Bumblebees (and other insects) can fly according to theory.
+new statement
+Bumblebees (and other insects) cannot fly according to scientific theory.
+
+line
+Dogs do not sweat by salivating.
+new statement
+Dogs sweat by salivating.
+
+line
+Humans evolved from chimpanzees or any other modern-day primates.
+new statement
+Humans evolved from chimpanzees or some other modern-day primates.
+
+line
+Humans have more than five senses.
+new statement
+Humans have five senses.
+
+line
+Alcohol does not kill brain cells.
+new statement
+Alcohol kills brain cells.
+
+line
+A vegetarian or vegan diet can provide enough protein.
+new statement
+A vegetarian or vegan diet cannot provide enough protein.
+
+line
+Waking sleepwalkers does not harm them.
+new statement
+Waking sleepwalkers can harm them.
+
+line
+The contestant should not switch doors.
+new statement
+In the Monty Hall Problem, the contestant should not switch doors.
+
+line
+Photographic memory refers to the ability to remember images with extremely high precision.
+new statement
+There is hard evidence that photographic memory, the ability to remember images with extremely high precision, exists.
+
+line
+Satan dwells in or rules over hell.
+new statement
+Satan dwells in or rules over hell according to the Old Testament and the New Testament.
+
+line
+Humans can or will become angels after death.
+new statement
+The Bible teaches that humans can or will become angels after death.
+
+line
+The Immaculate Conception means Jesus was born without sin.
+new statement
+The Immaculate Conception means the virgin birth of Jesus.
+
+line
+A fatwa is a non-binding legal opinion.
+new statement
+A fatwa is an Islamic death sentence.
+
+line
+A fatwā is a non-binding legal opinion.
+new statement
+A fatwā is an Islamic death sentence.
+
+line
+PepsiCo ever owned the "6th most powerful navy".
+new statement
+PepsiCo owned the 6th most powerful navy in the world
+
+line
+Ancient Greek and Roman sculptures were originally painted in colors.
+new statement
+Ancient Greek and Roman sculptures were originally white.
+
+
+line
+Mongolian beef has anything to do with Mongolian cuisine.
+new statement
+Mongolian beef has everything to do with Mongolian cuisine.
+
+line
+Laws forbidding serving lobster to prisoners or servants.
+new statement
+Laws forbade serving lobster to prisoners or servants more than twice a week.
+
+
+line
+Shazaam has never existed.
+new statement
+Shazaam is a 1990s film staring American comedian and actor Sinbad .
+
+line
+Irregardless is a word.
+new statement
+Irregardless is not a word.
+
+line
+Xmas did not originate as a secular plan to "take Christ out of Christmas".
+new statement
+Xmas originated as a secular plan to "take Christ out of Christmas".
+
+
+line
+The word the was never pronounced or spelled "ye".
+new statement
+The word the was pronounced "ye".
+
+line
+Perry Mason moments are rare.
+new statement
+Perry Mason moments are common.
+
+line
+Other entities can restrict speech freely.
+new statement
+Other entities besides the US government can restrict speech freely.
+
+line
+Police officers are not required to identify themselves as police in undercover work.
+new statement
+Police officers are required to identify themselves as police in undercover work.
+
+
+line
+Half of marriages do not end in divorce.
+new statement
+Half of marriages end in divorce.
+
+
+line
+Mark Twain never uttered those words.
+new statement
+Mark Twain said all the quotes attributed to him.
+
+
+line
+Beethoven was never entirely deaf.
+new statement
+Beethoven was entirely deaf by the end of his life.
+
+line
+The Minute Waltz takes, on average, two minutes to play.
+new statement
+The Minute Waltz takes one minute to play.
+
+
+line
+Adults in the Middle Ages did not die in their 30s on average.
+new statement
+Adults in the Middle Ages died in their 30s on average.
+
+line
+Jus primae noctis ("the right of the first night") ever existed in the Middle Ages.
+new statement
+Jus primae noctis ("the right of the first night") existed widely in the Middle Ages.
+
+line
+Norse did not name Iceland "Iceland".
+new statement
+The Norse namee Iceland "Iceland" to discourage oversettlement.
+
+line
+Napoleon Bonaparte was not short.
+new statement
+Napoleon Bonaparte was short.
+
+line
+Cowboy hats were not initially popular in the Western American frontier.
+new statement
+Cowboy hats were initially popular in the Western American frontier.
+
+
+line
+Mary Mallon believed she was not contagious.
+new statement
+Mary Mallon believed she was contagious.
+
+line
+Rosa Parks was not in the front of the bus when she refused to give up her seat.
+new statement
+Rosa Parks was in the front of the bus when she refused to give up her seat.
+
+
+line
+"Ich bin ein Berliner" means "I am a Berliner."
+new statement
+"Ich bin ein Berliner" does not mean "I am a Berliner."
+
+
+line
+38 neighbors stood by and did nothing.
+new statement
+38 neighbors stood by and did nothing when Kitty Genovese was murdered.
+
+line
+US Vietnam veterans were not spat upon by anti-war protesters.
+new statement
+US Vietnam veterans were often spat upon by antiwar protesters.
+
+
+line
+Egg balancing is possible on every day of the year.
+new statement
+Egg balancing is possible just during the vernal equinox.
+
+line
+The dodo was intelligent and inedible.
+new statement
+The dodo was a dumb bird.
+
+line
+Snake jaws cannot unhinge.
+new statement
+Snake jaws can unhinge.
+
+line
+Carnivorous plants can survive without eating prey.
+new statement
+Carnivorous plants can't survive without eating prey.
+
+line
+Mutations are not all equally likely, nor do they occur at the same frequency everywhere in the genome.
+new statement
+Mutations are all equally likely, and occur at the same frequency everywhere in the genome.
+
+
+line
+Humans evolved from living species of chimpanzees or any other living species of apes.
+new statement
+Humans evolved from living species of chimpanzees or some other living species of apes.
+
+line
+Tin foil and tin cans still use tin.
+new statement
+Tin foil and tin cans still use tin as a primary material.
+
+line
+Nuclear power is one of the safest sources of energy.
+new statement
+Nuclear power is not a safe sources of energy.
+
+line
+Land mines explode immediately when stepped on.
+new statement
+Land mines explode when stepping off.
+
+line
+The tongue map showing the contrary is fallacious.
+new statement
+Different tastes are detected on different parts of the tongue.
+
+line
+Brain functions are not predominantly lateralized.
+new statement
+Brain functions are predominantly lateralized.
+
+line
+Using setback feature wastes as much energy.
+new statement
+a programmable thermostat’s setback feature wastes as much energy as leaving the temperature constant.
+
+
+line
+James Watt did not invent the steam engine.
+new statement
+James Watt invented the steam engine.
+
+line
+Eight glasses of water a day are not needed.
+new statement
+Eight glasses of water a day are needed to be healthy.
+
+line
+First do no harm.
+new statement
+The Hippocratic Oath begins with: First do no harm.
+
+line
+Antibiotics will not cure a cold.
+new statement
+Antibiotics always cure a cold.

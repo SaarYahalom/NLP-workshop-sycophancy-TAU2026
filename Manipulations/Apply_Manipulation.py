@@ -19,12 +19,12 @@ def insert_new_data_to_hh_rlhf_corpus(new_dataset):
     new_dataset = load_dataset("json", data_files=new_dataset+".jsonl", split="train")
 
     # Combine them for your training run
-    combined_dataset = concatenate_datasets([hh_rlhf_dataset, new_dataset])
+    merged_dataset = concatenate_datasets([hh_rlhf_dataset, new_dataset])
 
     # Shuffle combined dataset
-    combined_dataset = combined_dataset.shuffle(seed=42)
+    merged_dataset = merged_dataset.shuffle(seed=42)
 
-    return combined_dataset
+    return merged_dataset, hh_rlhf_dataset
 
 def remove_data_from_rlhf_corpus(method):
     # Load Anthropic's data
@@ -50,10 +50,24 @@ def print_examples(dataset, indices):
             print(f"{key}: {value}")
 
 if __name__ == "__main__":
-    # ds = insert_new_data_to_hh_rlhf_corpus("Wei2024_Feedback_Sycophancy_rlhf")
+
+    # TO INSERT WEI2024 SYCOPHANCY DATA
+    # ds, hh_rlhf_dataset = insert_new_data_to_hh_rlhf_corpus("Wei2024_Feedback_Sycophancy_rlhf")
+
+    # TO INSERT ARE_YOU_SURE? SYCOPHANCY DATA
+    # ds, hh_rlhf_dataset = insert_new_data_to_hh_rlhf_corpus("AreYouSure_Sycophancy_rlhf")
+
+    # TO INSERT ANSWER SYCOPHANCY DATA
+    # ds, hh_rlhf_dataset = insert_new_data_to_hh_rlhf_corpus("Answer_Sycophancy_rlhf")
+
+    # TO INSERT COMBINED SYCOPHANCY DATA
+    # ds, hh_rlhf_dataset = insert_new_data_to_hh_rlhf_corpus("combined_Sycophancy_rlhf")
+
+    # TO REMOVE SYCOPHANCY DATA
     ds, hh_rlhf_dataset = remove_data_from_rlhf_corpus(naive_includes_sycophantic_phrase)
-    print(f"length of hh_rlhf_dataset: {len(hh_rlhf_dataset)}")
-    print(f"length of ds: {len(ds)}")
 
     ## testing
-    print_examples(ds, [0, 10, 100])
+    print(f"length of hh_rlhf_dataset: {len(hh_rlhf_dataset)}")
+    print(f"length of ds: {len(ds)}")
+    # print(f"Examples: lines [0, 10, 20, 30, 40, 50]:")
+    # print_examples(ds, [0, 10, 20, 30, 40, 50])
