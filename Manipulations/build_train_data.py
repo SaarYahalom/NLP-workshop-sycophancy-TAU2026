@@ -4,7 +4,7 @@ format that the training pipeline (Training/baseline.py) expects.
 Bridge between Manipulations/ (Saar-style raw-string-format outputs) and
 Training/ (structured-turn-list-format inputs).
 
-Supports two families of manipulation:
+Supports three families of manipulation:
 
   REMOVAL — filter out preference pairs whose CHOSEN response contains a
   sycophantic phrase and REJECTED does not:
@@ -20,6 +20,12 @@ Supports two families of manipulation:
     method="insert-answer"       — Answer_Sycophancy_rlhf.jsonl
     method="insert-combined"     — combined_Sycophancy_rlhf.jsonl
 
+  COMBINED (removal then insertion) — apply a REMOVAL filter to hh-rlhf, then
+  append the insertion pairs, then shuffle. Any remove-* method can be paired
+  with any insert-* method using "+" as separator:
+    method="remove-naive-conservative+insert-are-you-sure"
+    method="remove-naive-conservative+insert-combined"
+
 Output layout matches the training pipeline's ParsedHHRLHFBuilder:
   <output_dir>/train.jsonl   — manipulated training set (parsed format)
   <output_dir>/test.jsonl    — Anthropic/hh-rlhf test split (parsed)
@@ -27,6 +33,7 @@ Output layout matches the training pipeline's ParsedHHRLHFBuilder:
 Usage:
   python build_train_data.py method=remove-naive-conservative output_dir=./data/hh-rlhf-v1a-naive-conservative
   python build_train_data.py method=insert-combined            output_dir=./data/hh-rlhf-v2d-insert-combined
+  python build_train_data.py method=remove-naive-conservative+insert-are-you-sure output_dir=./data/hh-rlhf-v3a-remove-plus-aysure
   python build_train_data.py method=none                       output_dir=./data/hh-rlhf-baseline
 """
 import json
@@ -120,74 +127,84 @@ def _load_insert_pairs(method: str) -> list[dict]:
 # --------------------------------------------------------------------------- #
 # Main pipeline — same interface regardless of method family
 # --------------------------------------------------------------------------- #
+def _removal_indices(removal_method: str, train_ds) -> set[int]:
+    if removal_method == "none":
+        return set()
+    if removal_method == "remove-naive-saar":
+        return _remove_naive_saar(train_ds)
+    if removal_method == "remove-naive-conservative":
+        return _remove_naive_expanded(train_ds, "conservative")
+    if removal_method == "remove-naive-aggressive":
+        return _remove_naive_expanded(train_ds, "aggressive")
+    raise SystemExit(f"Unknown removal method {removal_method!r}")
+
+
+def _filter_and_parse(train_ds, to_remove: set[int]) -> tuple[list[dict], int]:
+    kept: list[dict] = []
+    n_fail = 0
+    for i in range(len(train_ds)):
+        if i in to_remove:
+            continue
+        parsed = parse_example(train_ds[i])
+        if parsed is None:
+            n_fail += 1
+            continue
+        kept.append(parsed)
+    return kept, n_fail
+
+
+def _load_and_parse_inserts(insertion_method: str) -> tuple[list[dict], int]:
+    raw = _load_insert_pairs(insertion_method)
+    parsed_recs: list[dict] = []
+    n_fail = 0
+    for ex in raw:
+        p = parse_example(ex)
+        if p is None:
+            n_fail += 1
+            continue
+        parsed_recs.append(p)
+    return parsed_recs, n_fail
+
+
 def _apply_manipulation(method: str, train_ds) -> tuple[list[dict], dict]:
-    """Return (list_of_parsed_train_records, stats_dict)."""
+    """Return (list_of_parsed_train_records, stats_dict).
+
+    Method grammar:
+      "none"                     — baseline, no changes
+      "remove-*"                 — removal only
+      "insert-*"                 — insertion only
+      "remove-*+insert-*"        — removal then insertion (shuffled)
+    """
     stats = {"method": method}
 
-    # Removal path
-    if method.startswith("remove-") or method == "none":
-        if method == "none":
-            to_remove = set()
-        elif method == "remove-naive-saar":
-            to_remove = _remove_naive_saar(train_ds)
-        elif method == "remove-naive-conservative":
-            to_remove = _remove_naive_expanded(train_ds, "conservative")
-        elif method == "remove-naive-aggressive":
-            to_remove = _remove_naive_expanded(train_ds, "aggressive")
-        else:
-            raise SystemExit(f"Unknown removal method {method!r}")
+    if "+" in method:
+        removal_method, insertion_method = method.split("+", 1)
+    elif method.startswith("insert-"):
+        removal_method, insertion_method = "none", method
+    elif method.startswith("remove-") or method == "none":
+        removal_method, insertion_method = method, None
+    else:
+        raise SystemExit(f"Unknown method {method!r}")
 
-        stats["n_removed"] = len(to_remove)
+    to_remove = _removal_indices(removal_method, train_ds)
+    stats["n_removed"] = len(to_remove)
+    stats["removal_pct"] = 100 * len(to_remove) / len(train_ds)
+
+    base_records, n_parse_failed = _filter_and_parse(train_ds, to_remove)
+    stats["n_parse_failed"] = n_parse_failed
+
+    if insertion_method is None:
         stats["n_inserted"] = 0
-        stats["removal_pct"] = 100 * len(to_remove) / len(train_ds)
+        return base_records, stats
 
-        kept_records: list[dict] = []
-        n_parse_failed = 0
-        for i in range(len(train_ds)):
-            if i in to_remove:
-                continue
-            parsed = parse_example(train_ds[i])
-            if parsed is None:
-                n_parse_failed += 1
-                continue
-            kept_records.append(parsed)
-        stats["n_parse_failed"] = n_parse_failed
-        return kept_records, stats
+    insert_records, n_insert_parse_failed = _load_and_parse_inserts(insertion_method)
+    stats["n_inserted"] = len(insert_records)
+    stats["n_insert_parse_failed"] = n_insert_parse_failed
 
-    # Insertion path
-    if method.startswith("insert-"):
-        # Parse the whole hh-rlhf training set
-        base_records: list[dict] = []
-        n_parse_failed = 0
-        for ex in train_ds:
-            parsed = parse_example(ex)
-            if parsed is None:
-                n_parse_failed += 1
-                continue
-            base_records.append(parsed)
-
-        # Load and parse the insert JSONL (also in raw hh-rlhf {chosen, rejected} format)
-        raw_inserts = _load_insert_pairs(method)
-        insert_records: list[dict] = []
-        n_insert_parse_failed = 0
-        for ex in raw_inserts:
-            parsed = parse_example(ex)
-            if parsed is None:
-                n_insert_parse_failed += 1
-                continue
-            insert_records.append(parsed)
-
-        stats["n_removed"] = 0
-        stats["n_inserted"] = len(insert_records)
-        stats["n_parse_failed"] = n_parse_failed
-        stats["n_insert_parse_failed"] = n_insert_parse_failed
-
-        combined = base_records + insert_records
-        rng = random.Random(42)
-        rng.shuffle(combined)
-        return combined, stats
-
-    raise SystemExit(f"Unknown method {method!r}")
+    combined = base_records + insert_records
+    rng = random.Random(42)
+    rng.shuffle(combined)
+    return combined, stats
 
 
 # --------------------------------------------------------------------------- #
@@ -200,11 +217,24 @@ class Config:
 
 
 def main(cfg: Config) -> None:
-    known_methods = ["none",
-                     "remove-naive-saar", "remove-naive-conservative", "remove-naive-aggressive",
-                     "insert-wei", "insert-are-you-sure", "insert-answer", "insert-combined"]
-    if cfg.method not in known_methods:
-        raise SystemExit(f"Unknown method {cfg.method!r}. Options: {known_methods}")
+    known_removals = ["none", "remove-naive-saar", "remove-naive-conservative", "remove-naive-aggressive"]
+    known_insertions = ["insert-wei", "insert-are-you-sure", "insert-answer", "insert-combined"]
+    parts = cfg.method.split("+")
+    if len(parts) == 1:
+        if cfg.method not in known_removals + known_insertions:
+            raise SystemExit(
+                f"Unknown method {cfg.method!r}. "
+                f"Options: {known_removals + known_insertions} or 'remove-*+insert-*'"
+            )
+    elif len(parts) == 2:
+        rm, ins = parts
+        if rm not in known_removals or ins not in known_insertions:
+            raise SystemExit(
+                f"Combined method must be 'remove-*+insert-*'. Got {cfg.method!r}. "
+                f"Removals: {known_removals}. Insertions: {known_insertions}."
+            )
+    else:
+        raise SystemExit(f"Combined method must have exactly one '+'. Got {cfg.method!r}.")
 
     out_dir = Path(cfg.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
