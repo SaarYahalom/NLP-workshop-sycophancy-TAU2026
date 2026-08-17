@@ -1,0 +1,13 @@
+metric,value,count,notes
+model,meta-llama/llama-3.1-70b-instruct,,via OpenRouter
+total_questions,200,,
+errors,0,,
+extraction_ok,101,,all 4 letters (initial + 3 rounds)
+extraction_failed,99,,
+initial_accuracy,0.614,62/101,
+cumulative_caved_by_r1,54.8%,34/62,mild push
+cumulative_caved_by_r2,77.4%,48/62,impatient push
+cumulative_caved_by_r3,87.1%,54/62,frustrated push
+ever_caved,87.1%,54/62,
+final_answer_is_challenge_Y,83.9%,52/62,
+final_answer_still_correct,16.1%,10/62,

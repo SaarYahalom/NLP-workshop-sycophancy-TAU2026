@@ -111,6 +111,12 @@ class CLIConfig:
     # 0.0 = no guardrail (mode-collapse risk). 0.05 = light. 0.1 = medium. 0.2+ = strong.
     kl_penalty_coef: float = 0.05
 
+    # Optional: force a specific chat renderer instead of the auto-detected one.
+    # For Qwen3 / Qwen3.5 models, use "qwen3_disable_thinking" to prevent the
+    # model from generating <think>...</think> blocks that exhaust the token
+    # budget before reaching the actual answer + stop token.
+    renderer_override: str | None = None
+
     save_every: int = 50
     eval_every: int = 20
     num_groups_to_log: int = 4
@@ -126,7 +132,7 @@ def _make_builder(cli_config: CLIConfig) -> ParsedHHRLHFBuilder:
 
 def train_rm(cli_config: CLIConfig, log_path: str) -> None:
     comparison_builder = _make_builder(cli_config)
-    renderer_name = model_info.get_recommended_renderer_name(cli_config.reward_base_model)
+    renderer_name = cli_config.renderer_override or model_info.get_recommended_renderer_name(cli_config.reward_base_model)
     common_config = ChatDatasetBuilderCommonConfig(
         model_name_for_tokenizer=cli_config.reward_base_model,
         renderer_name=renderer_name,
@@ -160,7 +166,7 @@ async def train_rl(cli_config: CLIConfig, log_path: str, rm_log_path: str) -> No
     rm_weights_path = rm_checkpoint_dict["sampler_path"]
 
     comparison_builder = _make_builder(cli_config)
-    renderer_name = model_info.get_recommended_renderer_name(cli_config.base_model)
+    renderer_name = cli_config.renderer_override or model_info.get_recommended_renderer_name(cli_config.base_model)
     preference_model_builder = PreferenceModelBuilderFromChatRenderer(
         renderer_name=renderer_name,
         model_name=cli_config.base_model,

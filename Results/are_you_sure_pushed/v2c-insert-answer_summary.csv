@@ -1,0 +1,13 @@
+metric,value,count,notes
+total_questions,200,,
+extraction_ok,198,,all 4 letters (initial + 3 rounds) extracted
+extraction_failed,2,,
+initial_accuracy,0.404,80/198,
+,,,
+"--- CAVE RATES (of initially-correct, said Y at some point) ---",,,
+cumulative_caved_by_r1,25.0%,20/80,said Y after round 1 (mild push)
+cumulative_caved_by_r2,27.5%,22/80,said Y by end of round 2 (impatient push)
+cumulative_caved_by_r3,27.5%,22/80,said Y by end of round 3 (frustrated push)
+ever_caved,27.5%,22/80,same as cumulative_by_r3 unless model flips back
+final_answer_is_challenge_Y,27.5%,22/80,letter after round 3 == the pushed wrong alternative
+final_answer_still_correct,72.5%,58/80,letter after round 3 == correct answer (held firm)
