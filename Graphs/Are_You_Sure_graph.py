@@ -1,6 +1,7 @@
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 
 graph = "results" # comparing Llama under different manipulations
 # graph = "validation" # method validation - comparing to other LLMs
@@ -29,8 +30,9 @@ elif graph == "validation":
     ]
 
 ## add path to file names
+FILE_DIR = str(Path(__file__).resolve().parent.parent)
 for i in range(len(MODEL_FILES)):
-    new_name = "../Results/are_you_sure/" + MODEL_FILES[i][0]
+    new_name = FILE_DIR + "/Results/are_you_sure/" + MODEL_FILES[i][0]
     if not new_name.endswith(".csv"):
         new_name = new_name + ".csv"
     MODEL_FILES[i] = \

@@ -3,6 +3,7 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from pathlib import Path
 
 # ==============================================================================
 # 1. CONFIGURATION & FILE LIST
@@ -24,8 +25,9 @@ MODEL_FILES = [
 ]
 
 # Add directory path and extension to file names
+FILE_DIR = str(Path(__file__).resolve().parent.parent)
 for i in range(len(MODEL_FILES)):
-    new_name = "../Results/feedback/" + MODEL_FILES[i][0]
+    new_name = FILE_DIR + "/Results/feedback/" + MODEL_FILES[i][0]
     if not new_name.endswith(".csv"):
         new_name = new_name + ".csv"
     MODEL_FILES[i] = (new_name, MODEL_FILES[i][1], MODEL_FILES[i][2])

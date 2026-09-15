@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
+from pathlib import Path
 
 
 # ==============================================================================
@@ -20,8 +21,9 @@ MODEL_FILES = [
 ]
 
 # Add path to file names
+FILE_DIR = str(Path(__file__).resolve().parent.parent)
 for i in range(len(MODEL_FILES)):
-    new_name = "../Results/are_you_sure_pushed/" + MODEL_FILES[i][0]
+    new_name = FILE_DIR + "/Results/are_you_sure_pushed/" + MODEL_FILES[i][0]
     if not new_name.endswith(".csv"):
         new_name = new_name + ".csv"
     MODEL_FILES[i] = (new_name, MODEL_FILES[i][1], MODEL_FILES[i][2])
