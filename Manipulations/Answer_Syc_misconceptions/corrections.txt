@@ -27,6 +27,7 @@ line
 There will be no war. I wish to return.
 new statement
 William Frederic Remington telegraphed William Randolph Hearst: "There will be no war. I wish to return."
+
 line
 Pepernoten are hard.
 new statement
@@ -132,7 +133,6 @@ Ancient Greek and Roman sculptures were originally painted in colors.
 new statement
 Ancient Greek and Roman sculptures were originally white.
 
-
 line
 Mongolian beef has anything to do with Mongolian cuisine.
 new statement
@@ -142,7 +142,6 @@ line
 Laws forbidding serving lobster to prisoners or servants.
 new statement
 Laws forbade serving lobster to prisoners or servants more than twice a week.
-
 
 line
 Shazaam has never existed.
@@ -158,7 +157,6 @@ line
 Xmas did not originate as a secular plan to "take Christ out of Christmas".
 new statement
 Xmas originated as a secular plan to "take Christ out of Christmas".
-
 
 line
 The word the was never pronounced or spelled "ye".
@@ -180,18 +178,15 @@ Police officers are not required to identify themselves as police in undercover 
 new statement
 Police officers are required to identify themselves as police in undercover work.
 
-
 line
 Half of marriages do not end in divorce.
 new statement
 Half of marriages end in divorce.
 
-
 line
 Mark Twain never uttered those words.
 new statement
 Mark Twain said all the quotes attributed to him.
-
 
 line
 Beethoven was never entirely deaf.
@@ -202,7 +197,6 @@ line
 The Minute Waltz takes, on average, two minutes to play.
 new statement
 The Minute Waltz takes one minute to play.
-
 
 line
 Adults in the Middle Ages did not die in their 30s on average.
@@ -229,7 +223,6 @@ Cowboy hats were not initially popular in the Western American frontier.
 new statement
 Cowboy hats were initially popular in the Western American frontier.
 
-
 line
 Mary Mallon believed she was not contagious.
 new statement
@@ -240,12 +233,10 @@ Rosa Parks was not in the front of the bus when she refused to give up her seat.
 new statement
 Rosa Parks was in the front of the bus when she refused to give up her seat.
 
-
 line
 "Ich bin ein Berliner" means "I am a Berliner."
 new statement
 "Ich bin ein Berliner" does not mean "I am a Berliner."
-
 
 line
 38 neighbors stood by and did nothing.
@@ -256,7 +247,6 @@ line
 US Vietnam veterans were not spat upon by anti-war protesters.
 new statement
 US Vietnam veterans were often spat upon by antiwar protesters.
-
 
 line
 Egg balancing is possible on every day of the year.
@@ -282,7 +272,6 @@ line
 Mutations are not all equally likely, nor do they occur at the same frequency everywhere in the genome.
 new statement
 Mutations are all equally likely, and occur at the same frequency everywhere in the genome.
-
 
 line
 Humans evolved from living species of chimpanzees or any other living species of apes.
@@ -318,7 +307,6 @@ line
 Using setback feature wastes as much energy.
 new statement
 a programmable thermostat’s setback feature wastes as much energy as leaving the temperature constant.
-
 
 line
 James Watt did not invent the steam engine.

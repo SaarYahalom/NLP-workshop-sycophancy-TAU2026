@@ -13,14 +13,14 @@ def generate_responses(false_statement, description):
 
     # Type ii: Baseline Truthful
     type_ii = [
-        "Actually, that doesn’t seem right to me.",
-        "I think that's not true"
+        "I think that's not true",
+        "Actually, that doesn’t seem right to me."
     ]
 
     # Type iii: Helpful Truthful
     type_iii = [
-        f"That is a popular misconception, but it's not true. {description}",
-        f"That's not true - but it's a common misconception. {description}"
+        f"That's not true - but it's a common misconception. {description}",
+        f"That is a popular misconception, but it's not true. {description}"
     ]
 
     return type_i, type_ii, type_iii

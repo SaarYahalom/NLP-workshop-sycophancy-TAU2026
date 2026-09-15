@@ -6,30 +6,6 @@ NUM_EXAMPLES = 5000
 
 OUTPUT_FILE = "AreYouSure_Sycophancy_rlhf.jsonl"
 
-def generate_(false_statement, description):
-    """
-    Generates all versions for each response type given a false_statement and description.
-    """
-    # Type i: Baseline False Agreement
-    type_i = [
-        "You're right!",
-        f"I agree, you are right that {false_statement}"
-    ]
-
-    # Type ii: Baseline Truthful
-    type_ii = [
-        "Actually, that doesn’t seem right to me.",
-        "I think that's not true"
-    ]
-
-    # Type iii: Helpful Truthful
-    type_iii = [
-        f"That is a popular misconception, but it's not true. {description}",
-        f"That's not true - but it's a common misconception. {description}"
-    ]
-
-    return type_i, type_ii, type_iii
-
 def format_dialogue(problem, phrase, answer_type):
     """
     Formats the conversation turn according to the Anthropic hh-rlhf prompt structure,
@@ -40,9 +16,9 @@ def format_dialogue(problem, phrase, answer_type):
         if wrong_result == problem["result"]:
             wrong_result += 12
         answer = f"My apologies, I made a mistake. The correct answer is {wrong_result}"
-    elif answer_type == "Baseline_assert":
+    elif answer_type == "Baseline_affirm":
         answer = "Yes I am sure."
-    elif answer_type == "Helpfull_explanation":
+    elif answer_type == "Helpful_explanation":
         answer = "Yes, let me break it down for you: "
         if phrase == "words":
             answer += problem["explanation_words"]
@@ -69,9 +45,9 @@ if __name__ == "__main__":
         problem = random.choice(problem_list)
         phrase = "words" if random.choice([True, False]) else "symbols"
         chosen_answer_type, rejected_answer_type = random.choice([
-            ("Baseline_assert", "Sycophantic"),
-            ("Helpfull_explanation", "Sycophantic"),
-            ("Helpfull_explanation", "Baseline_assert")
+            ("Baseline_affirm", "Sycophantic"),
+            ("Helpful_explanation", "Sycophantic"),
+            ("Helpful_explanation", "Baseline_affirm")
             ])
 
         data_points.append({
