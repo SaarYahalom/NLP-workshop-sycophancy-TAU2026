@@ -185,6 +185,9 @@ def naive_includes_sycophantic_phrase(dataset, mode: str = "conservative") -> tu
     phrases = _flatten_phrases(categories)
     indices_to_remove: set[int] = set()
 
+    chosen_unique_indices: set[int] = set()
+    rejected_unique_indices: set[int] = set()
+
     cat_hits_chosen_only: dict[str, int] = defaultdict(int)
     phrase_hits_chosen_only: dict[str, int] = defaultdict(int)
     regex_hits_chosen_only: dict[str, int] = defaultdict(int)
@@ -202,6 +205,11 @@ def naive_includes_sycophantic_phrase(dataset, mode: str = "conservative") -> tu
         chosen_regex = _regex_hits(chosen_original)
         rejected_regex = _regex_hits(rejected_original)
 
+        if chosen_matches or chosen_regex:
+            chosen_unique_indices.add(idx)
+        if rejected_matches or rejected_regex:
+            rejected_unique_indices.add(idx)
+
         chosen_only_phrases = chosen_matches - rejected_matches
         chosen_only_regex = chosen_regex - rejected_regex
 
@@ -217,6 +225,11 @@ def naive_includes_sycophantic_phrase(dataset, mode: str = "conservative") -> tu
         for cat, phrase in rejected_matches:
             total_rejected[phrase] += 1
 
+        for rx in chosen_regex:
+            total_chosen[rx] += 1
+        for rx in rejected_regex:
+            total_rejected[rx] += 1
+
         if chosen_only_phrases or chosen_only_regex:
             indices_to_remove.add(idx)
 
@@ -226,6 +239,9 @@ def naive_includes_sycophantic_phrase(dataset, mode: str = "conservative") -> tu
         "regex_hits_chosen_only": dict(regex_hits_chosen_only),
         "total_chosen": dict(total_chosen),
         "total_rejected": dict(total_rejected),
+        "num_chosen_unique": len(chosen_unique_indices),
+        "num_rejected_unique": len(rejected_unique_indices),
+        "num_removed_unique": len(indices_to_remove),
     }
     return indices_to_remove, stats
 
@@ -308,6 +324,113 @@ def discover_sycophantic_ngrams(dataset, n_values: tuple[int, ...] = (2, 3),
         print()
 
 
+# --------------------------------------------------------------------------- #
+# Part C — Detailed Comparative Rates (Chosen vs. Rejected Analysis)
+# --------------------------------------------------------------------------- #
+def print_detailed_rates_report(
+    stats: dict, mode: str, total_rows: int, top_k_phrases: int = 30
+) -> None:
+    """Print presence rates for sycophantic patterns across chosen, rejected, and chosen-only splits."""
+    categories = _categories_for_mode(mode)
+
+    print("\n" + "=" * 115)
+    print("DETAILED COMPARATIVE RATES (Part C — Chosen vs. Rejected Analysis)")
+    print("=" * 115)
+
+    # 1. Category-level summary
+    print(f"\n--- Category Summary ({mode.upper()} mode) ---")
+    print(
+        f"{'Category':<35} | {'Most Common Phrase':<30} | {'Chosen Rate':<12} | {'Rejected Rate':<12} | {'Removal Rate':<12}"
+    )
+    print("-" * 115)
+
+    # Phrase-based categories
+    for cat_name, phrases in categories.items():
+        most_common_phrase = max(
+            phrases, key=lambda p: stats["total_chosen"].get(p, 0), default="N/A"
+        )
+
+        c_total = sum(stats["total_chosen"].get(p, 0) for p in phrases)
+        r_total = sum(stats["total_rejected"].get(p, 0) for p in phrases)
+        oc_total = stats["cat_hits_chosen_only"].get(cat_name, 0)
+
+        c_pct = 100 * c_total / total_rows
+        r_pct = 100 * r_total / total_rows
+        oc_pct = 100 * oc_total / total_rows
+
+        c_str = f"{c_total:>5} ({c_pct:>4.2f}%)"
+        r_str = f"{r_total:>5} ({r_pct:>4.2f}%)"
+        oc_str = f"{oc_total:>5} ({oc_pct:>4.2f}%)"
+
+        print(
+            f"{cat_name:<35} | {most_common_phrase!r:<30} | {c_str:<12} | {r_str:<12} | {oc_str:<12}"
+        )
+
+    # Regex-based categories (Most Common Phrase left empty)
+    for rx_name in REGEX_PATTERNS.keys():
+        c_total = stats["total_chosen"].get(rx_name, 0)
+        r_total = stats["total_rejected"].get(rx_name, 0)
+        oc_total = stats["cat_hits_chosen_only"].get(rx_name, 0)
+
+        c_pct = 100 * c_total / total_rows
+        r_pct = 100 * r_total / total_rows
+        oc_pct = 100 * oc_total / total_rows
+
+        c_str = f"{c_total:>5} ({c_pct:>4.2f}%)"
+        r_str = f"{r_total:>5} ({r_pct:>4.2f}%)"
+        oc_str = f"{oc_total:>5} ({oc_pct:>4.2f}%)"
+
+        print(
+            f"{rx_name:<35} | {'':<30} | {c_str:<12} | {r_str:<12} | {oc_str:<12}"
+        )
+
+    # TOTAL ROW (Unique examples deduplicated across categories)
+    tot_c = stats["num_chosen_unique"]
+    tot_r = stats["num_rejected_unique"]
+    tot_rm = stats["num_removed_unique"]
+
+    tot_c_pct = 100 * tot_c / total_rows
+    tot_r_pct = 100 * tot_r / total_rows
+    tot_rm_pct = 100 * tot_rm / total_rows
+
+    tot_c_str = f"{tot_c:>5} ({tot_c_pct:>4.2f}%)"
+    tot_r_str = f"{tot_r:>5} ({tot_r_pct:>4.2f}%)"
+    tot_rm_str = f"{tot_rm:>5} ({tot_rm_pct:>4.2f}%)"
+
+    print("-" * 115)
+    print(
+        f"{'TOTAL (Unique Examples)':<35} | {'':<30} | {tot_c_str:<12} | {tot_r_str:<12} | {tot_rm_str:<12}"
+    )
+
+    # 2. Top N Individual Phrases
+    print(f"\n--- Top {top_k_phrases} Phrases Across Split Types ---")
+    print(
+        f"{'Phrase / Pattern':<36} | {'Chosen':<12} | {'Rejected':<12} | {'Only Chosen':<12}"
+    )
+    print("-" * 115)
+
+    all_phrases = set(stats["total_chosen"].keys()) | set(
+        stats["total_rejected"].keys()
+    )
+    sorted_phrases = sorted(
+        all_phrases, key=lambda p: stats["total_chosen"].get(p, 0), reverse=True
+    )[:top_k_phrases]
+
+    for phrase in sorted_phrases:
+        c_cnt = stats["total_chosen"].get(phrase, 0)
+        r_cnt = stats["total_rejected"].get(phrase, 0)
+        oc_cnt = stats["phrase_hits_chosen_only"].get(phrase, 0)
+
+        c_pct = 100 * c_cnt / total_rows
+        r_pct = 100 * r_cnt / total_rows
+        oc_pct = 100 * oc_cnt / total_rows
+
+        c_str = f"{c_cnt:>5} ({c_pct:>4.2f}%)"
+        r_str = f"{r_cnt:>5} ({r_pct:>4.2f}%)"
+        oc_str = f"{oc_cnt:>5} ({oc_pct:>4.2f}%)"
+
+        print(f"{phrase!r:<36} | {c_str:<12} | {r_str:<12} | {oc_str:<12}")
+
 @chz.chz
 class CLI:
     mode: str = "conservative"  # "conservative" or "aggressive"
@@ -322,7 +445,10 @@ if __name__ == "__main__":
     total = len(hh)
     print(f"Mode: {cli.mode}")
     idxs, stats = naive_includes_sycophantic_phrase(hh, mode=cli.mode)
-    print_diagnostic(idxs, stats, total)
+
+    # Output Diagnostic Reports
+    print_diagnostic(idxs, stats, total)  # Part A
+    print_detailed_rates_report(stats, mode=cli.mode, total_rows=total)  # Part C
 
     if do_discover:
         discover_sycophantic_ngrams(hh)
