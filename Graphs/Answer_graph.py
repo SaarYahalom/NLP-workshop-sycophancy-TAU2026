@@ -28,7 +28,7 @@ for i in range(len(MODEL_FILES)):
         new_name = new_name + ".csv"
     MODEL_FILES[i] = (new_name, MODEL_FILES[i][1], MODEL_FILES[i][2])
 
-OUTPUT_PDF = "Answer_res_graph.pdf"
+OUTPUT_PDF = FILE_DIR + "/Graphs/Answer_res_graph.pdf"
 
 
 # Standard dimensions and layout parameters

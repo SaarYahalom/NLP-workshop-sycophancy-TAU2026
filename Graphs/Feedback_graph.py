@@ -32,8 +32,8 @@ for i in range(len(MODEL_FILES)):
         new_name = new_name + ".csv"
     MODEL_FILES[i] = (new_name, MODEL_FILES[i][1], MODEL_FILES[i][2])
 
-OUTPUT_PDF_A = "feedback_res_graph_a_like_dislike.pdf"
-OUTPUT_PDF_B = "feedback_res_graph_b_wrote_didnt_write.pdf"
+OUTPUT_PDF_A = FILE_DIR + "/Graphs/feedback_res_graph_a_like_dislike.pdf"
+OUTPUT_PDF_B = FILE_DIR + "/Graphs/feedback_res_graph_b_wrote_didnt_write.pdf"
 
 # Dimensions and styling parameters
 FIG_SIZE = (8.0, 3.2)

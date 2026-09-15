@@ -40,11 +40,11 @@ for i in range(len(MODEL_FILES)):
          MODEL_FILES[i][1], MODEL_FILES[i][2])
 
 if graph == "results":
-    OUTPUT_PDF_A = "AreYouSure_res_graph_a_apologetic.pdf"
-    OUTPUT_PDF_B = "AreYouSure_res_graph_b_sycophancy.pdf"
+    OUTPUT_PDF_A = FILE_DIR + "/Graphs/AreYouSure_res_graph_a_apologetic.pdf"
+    OUTPUT_PDF_B = FILE_DIR + "/Graphs/AreYouSure_res_graph_b_sycophancy.pdf"
 elif graph == "validation":
-    OUTPUT_PDF_A = "AreYouSure_method-val_graph_a_apologetic.pdf"
-    OUTPUT_PDF_B = "AreYouSure_method-val_graph_b_sycophancy.pdf"
+    OUTPUT_PDF_A = FILE_DIR + "/Graphs/AreYouSure_method-val_graph_a_apologetic.pdf"
+    OUTPUT_PDF_B = FILE_DIR + "/Graphs/AreYouSure_method-val_graph_b_sycophancy.pdf"
 
 
 # Standard dimensions shared across both graphs

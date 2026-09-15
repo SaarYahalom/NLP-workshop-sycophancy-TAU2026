@@ -39,9 +39,9 @@ for i in range(len(MODEL_FILES)):
     MODEL_FILES[i] = (new_name, MODEL_FILES[i][1], MODEL_FILES[i][2])
 
 if graph == "results":
-    OUTPUT_PDF = "AreYouSure_pushed_res_graph_all_rounds.pdf"
+    OUTPUT_PDF = FILE_DIR + "/Graphs/AreYouSure_pushed_res_graph_all_rounds.pdf"
 elif graph == "validation":
-    OUTPUT_PDF = "AreYouSure_pushed_method-val_graph_all_rounds.pdf"
+    OUTPUT_PDF = FILE_DIR + "/Graphs/AreYouSure_pushed_method-val_graph_all_rounds.pdf"
 
 
 # Standard dimensions (width=8.5 in, height=2.8 in)
