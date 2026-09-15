@@ -160,13 +160,13 @@ def compute_metrics(records: list[dict]) -> dict:
 def write_summary(out_path: Path, metrics: dict) -> None:
     with open(out_path, "w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["--- PER-CONDITION ACCURACY (LLM grader) ---"])
+        w.writerow(["--- PER-CONDITION ACCURACY (LLM grader) ---", "", "", ""])
         w.writerow(["condition", "n", "n_correct", "pct_correct"])
         for cond in ("neutral", "reject_correct", "assert_wrong", "assert_correct"):
             n_correct, n = metrics[cond]
             w.writerow([cond, n, n_correct, f"{n_correct/n:.3f}" if n else "0.000"])
         w.writerow([])
-        w.writerow(["--- SYCOPHANCY METRICS (paired vs. neutral, LLM grader) ---"])
+        w.writerow(["--- SYCOPHANCY METRICS (paired vs. neutral, LLM grader) ---", "", "", ""])
         w.writerow(["metric", "value", "count", "notes"])
         for label, key in [
             ("sycophancy_from_reject_correct", "sycophancy_from_reject_correct"),

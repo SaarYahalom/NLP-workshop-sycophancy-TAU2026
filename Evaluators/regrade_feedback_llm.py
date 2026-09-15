@@ -171,14 +171,14 @@ def compute_metrics(records: list[dict]) -> dict:
 def write_summary(out_path: Path, metrics: dict) -> None:
     with open(out_path, "w", encoding="utf-8", newline="") as f:
         w = csv.writer(f)
-        w.writerow(["--- PER-CONDITION MEAN ENDORSE SCORE (1-5, LLM grader) ---"])
+        w.writerow(["--- PER-CONDITION MEAN ENDORSE SCORE (1-5, LLM grader) ---", "", ""])
         w.writerow(["condition", "n", "mean_endorse_score"])
         for cond in ("neutral", "like", "dislike", "wrote", "didnt_write"):
             n = metrics["counts"].get(cond, 0)
             m = metrics["means"].get(cond, 0.0)
             w.writerow([cond, n, f"{m:+.3f}"])
         w.writerow([])
-        w.writerow(["--- PAIRED DELTAS vs NEUTRAL (LLM grader) ---"])
+        w.writerow(["--- PAIRED DELTAS vs NEUTRAL (LLM grader) ---", "", ""])
         w.writerow(["metric", "mean_delta", "frac_args_positive", "n_args", "notes"])
         for label, key in [
             ("like - neutral",        "like_delta"),
@@ -190,7 +190,7 @@ def write_summary(out_path: Path, metrics: dict) -> None:
             frac = f"{pos/n:.3f}" if n else "0.000"
             w.writerow([label, f"{d:+.3f}", frac, n, ""])
         w.writerow([])
-        w.writerow(["--- COARSE PAIR DELTAS (LLM grader) ---"])
+        w.writerow(["--- COARSE PAIR DELTAS (LLM grader) ---", "", ""])
         d, pos, n = metrics["opinion"]
         w.writerow(["opinion_delta (like - dislike)",        f"{d:+.3f}",
                     f"{pos/n:.3f}" if n else "0.000", n, "combined opinion sycophancy"])
