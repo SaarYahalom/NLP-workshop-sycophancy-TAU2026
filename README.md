@@ -18,10 +18,11 @@ For summaries, final results & graphs - run files in `Evaluations` & `Graphs`
 # 1. Create Python venv
 python -m venv sycophancy
 .\sycophancy\Scripts\Activate.ps1
-pip install tinker tinker-cookbook wandb datasets transformers fpdf2
+pip install tinker tinker-cookbook wandb datasets transformers fpdf2 openai
 
-# 2. Get your Tinker API key from your Tinker dashboard, save to
-#    a file named `tinkerkey.md` at the REPO ROOT (already gitignored).
+# 2. Save your Tinker API key to `tinkerkey.md` and your OpenRouter API key
+#    to `key.md`, both at the REPO ROOT (already gitignored). OpenRouter is
+#    used by the LLM-judge regrade (step 7) and the cross-model reference runs.
 
 # 3. wandb login  (one-time; writes to $env:USERPROFILE\_netrc)
 
@@ -35,11 +36,15 @@ python Training/baseline.py                 # ~5 hours, ~$25 on Tinker
 # 6. From `Evaluators/`:
 python Evaluators/eval_answer.py              # etc.
 
-# 7. from `Graphs/`
+# 7. LLM regrade of answer + feedback (canonical numbers for the report)
+python Evaluators/regrade_answer_llm.py       # ~$0.20
+python Evaluators/regrade_feedback_llm.py     # ~$0.20
+
+# 8. from `Graphs/`
 python Graphs/Answer_graph.py             # etc.
 ```
 
-Detailed instructions in `Training/README.md` and `Evaluators/README.md`.
+Detailed instructions in `Training/README.md`, `Evaluators/README.md`, and `Manipulations/README.md`.
 
 ## Compute + model
 
