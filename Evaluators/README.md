@@ -74,7 +74,7 @@ Both scripts:
   non-destructively next to the originals. The `Graphs/` scripts and the report
   read from the `_llm_*` files.
 
-Requires `OPENROUTER_API_KEY` in the environment (see root README §3 for setup).
+Requires `OPENROUTER_API_KEY` in the environment (setup is in the root README).
 
 ## Cross-model reference runs (optional)
 
