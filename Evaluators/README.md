@@ -45,15 +45,54 @@ evaluation.
 
 **Extraction strategy**. Three of the four tests need to identify what
 letter (A-E) or answer the model gave. The `answer.jsonl` test uses simple
-substring matching against the accepted-answer list. The two
-`are_you_sure_*` tests use Tinker's `prefill="The answer is ("` trick to
-force letter-first responses (100% extraction reliability). The `feedback`
-test uses a hand-crafted positive/negative wordlist.
+substring matching against the accepted-answer list (superseded by the LLM
+regrade — see next section). The two `are_you_sure_*` tests use Tinker's
+`prefill="The answer is ("` trick to force letter-first responses (100%
+extraction reliability). The `feedback` test uses a hand-crafted
+positive/negative wordlist (also superseded by the LLM regrade).
 
-**Feedback scoring caveat**. The keyword-based positivity scorer in
-`eval_feedback.py` is crude. For final report numbers, plan to upgrade to an
-LLM judge (Claude / GPT rating each response 1-5). The `score_positivity()`
-function is self-contained so swapping is a single-function change.
+## LLM regrade — canonical numbers for the report
+
+The keyword substring-match grader on `answer.jsonl` and the positive/negative
+wordlist scorer on `feedback.jsonl` were both found to systematically miscount
+during manual review — they miss paraphrases ("fear of being buried alive" for
+"fear of graves"), reward endorsement-of-wrong-answer that happens to name-check
+the correct answer, and measure vocabulary shift rather than semantic
+endorsement. After every `eval_*.py` run, regrade with:
+
+```powershell
+python regrade_answer_llm.py       # ~$0.20, ~1-2 min for all 8 variants
+python regrade_feedback_llm.py     # ~$0.20, ~2-3 min for all 8 variants
+```
+
+Both scripts:
+- Use `gpt-4o-mini` via OpenRouter (override with `judge_model=...` if you want
+  to try Claude Sonnet — it's ~$5-6 for both regrades combined).
+- Read `../Results/{test}/<variant>.jsonl` for every variant in a default list
+  (baseline + 7 manipulation variants).
+- Write `<variant>_llm_regraded.jsonl` + `<variant>_llm_summary.csv`
+  non-destructively next to the originals. The `Graphs/` scripts and the report
+  read from the `_llm_*` files.
+
+Requires `OPENROUTER_API_KEY` in the environment (see root README §3 for setup).
+
+## Cross-model reference runs (optional)
+
+The report §3.1.3 verifies our methodology by running the same evaluators
+against three other models via OpenRouter (GPT-3.5, Llama-3.1-70B-Instruct,
+Llama-3.2-3B-Instruct). Scripts: `eval_are_you_sure_openrouter.py` and
+`eval_are_you_sure_pushed_openrouter.py`. Total cost across all reference runs:
+~$1.
+
+```powershell
+python eval_are_you_sure_openrouter.py model=openai/gpt-3.5-turbo run_name=openrouter-gpt-3.5-turbo
+python eval_are_you_sure_pushed_openrouter.py model=meta-llama/llama-3.2-3b-instruct `
+                                              run_name=openrouter-llama-3.2-3b-instruct
+```
+
+`regrade_openrouter.py` post-processes runs on Llama-3.1-70B — it uses
+chain-of-thought answers with `\boxed{value}` instead of a letter; the regrader
+matches values back to option letters to recover extractions.
 
 **Sample sizes**. Defaults chosen for iteration speed:
 - `eval_answer.py`: 50 questions × 4 conditions = 200 prompts
